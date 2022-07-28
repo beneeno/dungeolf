@@ -28,7 +28,7 @@ func _motion(delta):
 		if collision.normal.round() == Vector2.UP:
 			if angle < -0.2: # If angled enough to bounce, keep x speed
 				_t_vel = _t_vel.bounce(collision.normal) * bounce
-				_t_vel.x *= 1.5
+				_t_vel.x *= 4 / (5 * bounce)
 			else: # Parallel to floor, and rolling. No bounce
 				_t_vel.y = 0
 				_t_vel.x = lerp(_t_vel.x, 0, friction)

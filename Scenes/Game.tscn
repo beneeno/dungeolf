@@ -46,7 +46,7 @@
 [node name="Game" type="Node2D"]
 
 [node name="Ball" parent="." instance=ExtResource( 1 )]
-position = Vector2( 210, 70 )
+position = Vector2( 300, 60 )
 
 [node name="TileMapMain" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
