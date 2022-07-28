@@ -3,7 +3,7 @@ var velocity = Vector2()
 var gravity = 400
 var power = 10
 
-var _cam_lastpos = Vector2.ZERO
+var _cam_lastpos = Vector2()
 var _new_pos = Vector2()
 var _line_position = Vector2()
 var _is_aiming = false
@@ -25,9 +25,7 @@ onready var _cam_up = _tiles.position.y + _vp.y - 20
 onready var _cam_down = _tiles.size.y - _vp.y + 20
 
 func _ready():
-	$Camera2D.position = position
-	$CamTarget.position = position
-	_cam_lastpos = position
+	pass
 
 func _process(_delta):
 	_draw_aim_line()
@@ -164,6 +162,32 @@ func _clear_trajectory():
 		Line.clear_points()
 
 func _camera():
+	# Custom drag margins, ugh
+	if $CamTarget.global_position.x == $Camera2D.global_position.x:
+		# If going left
+		if velocity.x < 0 and $Camera2D.position.x < 128:
+			$CamTarget.global_position.x = _cam_lastpos.x
+			$Camera2D.global_position.x = _cam_lastpos.x
+		# If going right
+		if velocity.x > 0 and $Camera2D.position.x > -128:
+			$CamTarget.global_position.x = _cam_lastpos.x
+			$Camera2D.global_position.x = _cam_lastpos.x
+		
+	if $CamTarget.global_position.y == $Camera2D.global_position.y:
+		# If going down
+		if velocity.y > 0 and $Camera2D.position.y > -76:
+			$CamTarget.global_position.y = _cam_lastpos.y
+			$Camera2D.global_position.y = _cam_lastpos.y
+		# If going up
+		if velocity.y < 0 and $Camera2D.position.y < 76:
+			$CamTarget.global_position.y = _cam_lastpos.y
+			$Camera2D.global_position.y = _cam_lastpos.y
+	
+	# Lerp and round
+	$Camera2D.position = lerp($Camera2D.position, $CamTarget.position, 0.2)
+	if $Camera2D.position.distance_to($CamTarget.position) < 1:
+		$Camera2D.position = $CamTarget.position
+
 	# Keep camera in boundary
 	if (_cam_right - _cam_left) > 0:
 		$CamTarget.global_position.x = clamp($CamTarget.global_position.x, _cam_left, _cam_right)
@@ -178,30 +202,4 @@ func _camera():
 		$CamTarget.global_position.y = _tiles_mid.y
 		$Camera2D.global_position.y = _tiles_mid.y
 	
-	# Custom drag margins, ugh
-	if $CamTarget.global_position.x == $Camera2D.global_position.x:
-		# If going left
-		if velocity.x < 0 and $CamTarget.position.x < 128:
-			$CamTarget.global_position.x = _cam_lastpos.x
-			$Camera2D.global_position.x = $CamTarget.global_position.x
-		# If going right
-		if velocity.x > 0 and $Camera2D.position.x > -128:
-			$CamTarget.global_position.x = _cam_lastpos.x
-			$Camera2D.global_position.x = $CamTarget.global_position.x
-	if $CamTarget.global_position.y == $Camera2D.global_position.y:
-		# If going down
-		if velocity.y > 0 and $CamTarget.position.y > -76:
-			$CamTarget.global_position.y = _cam_lastpos.y
-			$Camera2D.global_position.y = $CamTarget.global_position.y
-		# If going up
-		if velocity.y < 0 and $CamTarget.position.y < 76:
-			$CamTarget.global_position.y = _cam_lastpos.y
-			$Camera2D.global_position.y = $CamTarget.global_position.y
-	
-	# Lerp and round
-	$Camera2D.position = lerp($Camera2D.position, $CamTarget.position, 0.2)
-	if $Camera2D.position.distance_to($CamTarget.position) < 1:
-		$Camera2D.position = $CamTarget.position
-	
-	
-	_cam_lastpos = $CamTarget.global_position
+	_cam_lastpos = $Camera2D.global_position
