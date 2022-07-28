@@ -15,8 +15,8 @@ onready var Line = $Launcher/TrajectoryLine
 onready var Trail = $CPUParticles2D
 onready var Aim = $Launcher/Aim
 onready var _vp = get_viewport_rect().size / 2
-onready var _limits = get_node("../TileMap").get_used_rect()
-onready var _cell = get_node("../TileMap").cell_size
+onready var _limits = get_node("../TileMapMain").get_used_rect()
+onready var _cell = get_node("../TileMapMain").cell_size
 onready var _tiles = Rect2(_limits.position * _cell, (_limits.position * _cell) + (_limits.size * _cell))
 onready var _tiles_mid = (_limits.position * _cell) + ((_limits.size * _cell) / 2)
 onready var _cam_left = _tiles.position.x + _vp.x - 20
@@ -46,8 +46,8 @@ func _motion(delta):
 	# Bounce physics
 	if collision and collision.collider is StaticBody2D:
 		var angle = collision.normal.dot(velocity.normalized())
-		var bounce = collision.collider.get_parent().bounce
-		var friction = collision.collider.get_parent().friction
+		var bounce = collision.collider.bounciness
+		var friction = collision.collider.roughness
 		if collision.normal.round() == Vector2.UP:
 			if angle < -0.2: # If angled enough to bounce, keep x speed
 				velocity = velocity.bounce(collision.normal) * bounce

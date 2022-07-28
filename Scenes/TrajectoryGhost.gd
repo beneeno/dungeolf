@@ -23,8 +23,8 @@ func _motion(delta):
 	# Bounce physics
 	if collision:
 		var angle = collision.normal.dot(_t_vel.normalized())
-		var bounce = collision.collider.get_parent().bounce
-		var friction = collision.collider.get_parent().friction
+		var bounce = collision.collider.bounciness
+		var friction = collision.collider.roughness
 		if collision.normal.round() == Vector2.UP:
 			if angle < -0.2: # If angled enough to bounce, keep x speed
 				_t_vel = _t_vel.bounce(collision.normal) * bounce

@@ -1,23 +1,20 @@
-extends Polygon2D
+extends StaticBody2D
 
-export(String, "Normal", "Bouncy", "Rough") var Type = 'Normal'
-
-var bounce
-var friction
+var bounciness
+var roughness
 
 func _ready():
-	var collision_shape = CollisionPolygon2D.new()
-	collision_shape.polygon = polygon
-	$StaticBody2D.add_child(collision_shape)
-	
+	pass
+
+func init(id):
 	# Set traits
-	match Type:
-		"Normal":
-			bounce = 0.5
-			friction = 0.008
-		"Bouncy":
-			bounce = 0.8
-			friction = 0.008
-		"Rough":
-			bounce = 0.25
-			friction = 0.1
+	match id:
+		0: # Normal
+			bounciness = 0.5
+			roughness = 0.008
+		1: # Bouncy
+			bounciness = 0.8
+			roughness = 0.008
+		2: # Rough
+			bounciness = 0.25
+			roughness = 0.1
