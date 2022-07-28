@@ -14,14 +14,20 @@ onready var Ghost = load("res://Scenes/TrajectoryGhost.tscn")
 onready var Line = $Launcher/TrajectoryLine
 onready var Trail = $CPUParticles2D
 onready var Aim = $Launcher/Aim
+onready var _vp = get_viewport_rect().size / 2
 onready var _limits = get_node("../TileMap").get_used_rect()
-onready var _cells = get_node("../TileMap").cell_size
+onready var _cell = get_node("../TileMap").cell_size
+onready var _tiles = Rect2(_limits.position * _cell, (_limits.position * _cell) + (_limits.size * _cell))
+onready var _tiles_mid = (_limits.position * _cell) + ((_limits.size * _cell) / 2)
+onready var _cam_left = _tiles.position.x + _vp.x - 20
+onready var _cam_right = _tiles.size.x - _vp.x + 20
+onready var _cam_up = _tiles.position.y + _vp.y - 20
+onready var _cam_down = _tiles.size.y - _vp.y + 20
 
 func _ready():
-	$Camera2D.limit_left = _limits.position.x * _cells.x - 16
-	$Camera2D.limit_right = _limits.end.x * _cells.x + 16
-	$Camera2D.limit_top = _limits.position.y * _cells.y - 16
-	$Camera2D.limit_bottom = _limits.end.y * _cells.y + 16
+	$Camera2D.position = position
+	$CamTarget.position = position
+	_cam_lastpos = position
 
 func _process(_delta):
 	_draw_aim_line()
@@ -159,14 +165,18 @@ func _clear_trajectory():
 
 func _camera():
 	# Keep camera in boundary
-	var lx = ((_limits.end.x * _cells.x) / 2) - 99
-	var hx = ((_limits.end.x * _cells.x) / 2) + 99
-	var ly = ((_limits.end.y * _cells.y) / 2) - 48
-	var hy = ((_limits.end.y * _cells.y) / 2) + 48
-	$CamTarget.global_position.x = clamp($CamTarget.global_position.x, lx, hx)
-	$CamTarget.global_position.y = clamp($CamTarget.global_position.y, ly, hy)
-	$Camera2D.global_position.x = clamp($Camera2D.global_position.x, lx, hx)
-	$Camera2D.global_position.y = clamp($Camera2D.global_position.y, ly, hy)
+	if (_cam_right - _cam_left) > 0:
+		$CamTarget.global_position.x = clamp($CamTarget.global_position.x, _cam_left, _cam_right)
+		$Camera2D.global_position.x = clamp($Camera2D.global_position.x, _cam_left, _cam_right)
+	else:
+		$CamTarget.global_position.x = _tiles_mid.x
+		$Camera2D.global_position.x = _tiles_mid.x
+	if (_cam_down - _cam_up) > 0:
+		$CamTarget.global_position.y = clamp($CamTarget.global_position.y, _cam_up, _cam_down)
+		$Camera2D.global_position.y = clamp($Camera2D.global_position.y, _cam_up, _cam_down)
+	else:
+		$CamTarget.global_position.y = _tiles_mid.y
+		$Camera2D.global_position.y = _tiles_mid.y
 	
 	# Custom drag margins, ugh
 	if $CamTarget.global_position.x == $Camera2D.global_position.x:

@@ -59,9 +59,12 @@ shape = SubResource( 1 )
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 editor_draw_screen = false
-editor_draw_limits = true
 
 [node name="CamTarget" type="Position2D" parent="."]
+
+[node name="Sprite" type="Sprite" parent="CamTarget"]
+scale = Vector2( 0.25, 0.25 )
+texture = ExtResource( 1 )
 
 [connection signal="mouse_entered" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_entered"]
 [connection signal="mouse_exited" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_exited"]
