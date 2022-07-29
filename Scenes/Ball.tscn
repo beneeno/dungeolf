@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/ball.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/Ball.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Scripts/Ball.gd" type="Script" id=2]
 [ext_resource path="res://Assets/trajectory.png" type="Texture" id=3]
 
 [sub_resource type="Gradient" id=5]
