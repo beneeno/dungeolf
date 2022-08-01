@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/Scripts/Ball.gd" type="Script" id=1]
-[ext_resource path="res://Assets/ball.png" type="Texture" id=2]
+[ext_resource path="res://Assets/actors.png" type="Texture" id=2]
 [ext_resource path="res://Assets/trajectory.png" type="Texture" id=3]
 [ext_resource path="res://Data/Scenes/Actors/TrajectoryGhost.tscn" type="PackedScene" id=4]
 
@@ -13,6 +13,10 @@ radius = 6.0
 
 [sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 10, 10 )
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.12311
@@ -55,7 +59,7 @@ scale_amount = 4.0
 scale_amount_curve = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+texture = SubResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -69,7 +73,6 @@ editor_draw_screen = false
 [node name="Sprite" type="Sprite" parent="CamTarget"]
 visible = false
 scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 2 )
 
 [connection signal="mouse_entered" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_entered"]
 [connection signal="mouse_exited" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_exited"]
