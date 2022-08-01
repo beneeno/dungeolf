@@ -1,22 +1,7 @@
 [gd_resource type="TileSet" load_steps=3 format=2]
 
 [ext_resource path="res://Assets/tileset_main.png" type="Texture" id=1]
-
-[sub_resource type="GDScript" id=1]
-script/source = "tool
-extends TileSet
-
-const GRASS = 0
-const BRICK = 1
-
-var binds = {
-	GRASS : [BRICK]
-}
-
-func _is_tile_bound(drawn_id, neighbor_id):
-	if drawn_id in binds:
-		return neighbor_id in binds[drawn_id]
-"
+[ext_resource path="res://Data/Scripts/tileset_main.gd" type="Script" id=2]
 
 [resource]
 0/name = "block_grass"
@@ -93,4 +78,4 @@ func _is_tile_bound(drawn_id, neighbor_id):
 3/shape_one_way_margin = 0.0
 3/shapes = [  ]
 3/z_index = 0
-script = SubResource( 1 )
+script = ExtResource( 2 )
