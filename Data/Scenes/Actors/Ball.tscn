@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://Assets/ball.png" type="Texture" id=1]
-[ext_resource path="res://Scenes/Scripts/Ball.gd" type="Script" id=2]
+[ext_resource path="res://Data/Scripts/Ball.gd" type="Script" id=1]
+[ext_resource path="res://Assets/ball.png" type="Texture" id=2]
 [ext_resource path="res://Assets/trajectory.png" type="Texture" id=3]
+[ext_resource path="res://Data/Scenes/Actors/TrajectoryGhost.tscn" type="PackedScene" id=4]
 
 [sub_resource type="Gradient" id=5]
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.196078 )
@@ -18,7 +19,8 @@ radius = 4.12311
 
 [node name="Ball" type="KinematicBody2D"]
 collision_mask = 2
-script = ExtResource( 2 )
+script = ExtResource( 1 )
+TrajGhost = ExtResource( 4 )
 
 [node name="Launcher" type="Node2D" parent="."]
 
@@ -53,7 +55,7 @@ scale_amount = 4.0
 scale_amount_curve = SubResource( 4 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -67,7 +69,7 @@ editor_draw_screen = false
 [node name="Sprite" type="Sprite" parent="CamTarget"]
 visible = false
 scale = Vector2( 0.25, 0.25 )
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 
 [connection signal="mouse_entered" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_entered"]
 [connection signal="mouse_exited" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_exited"]

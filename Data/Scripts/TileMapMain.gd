@@ -1,6 +1,6 @@
 extends TileMap
 
-onready var Block = preload("res://Scenes/Block.tscn")
+export var Block: PackedScene
 
 func _ready():
 	var blocks = get_used_cells()

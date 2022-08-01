@@ -1,4 +1,7 @@
 extends KinematicBody2D
+
+export var TrajGhost: PackedScene
+
 var velocity = Vector2()
 var gravity = 400
 var power = 10
@@ -18,7 +21,6 @@ var _cam_right = int()
 var _cam_up = int()
 var _cam_down = int()
 
-onready var Ghost = load("res://Scenes/TrajectoryGhost.tscn")
 onready var Line = $Launcher/TrajectoryLine
 onready var Trail = $CPUParticles2D
 onready var Aim = $Launcher/Aim
@@ -150,7 +152,7 @@ func _draw_aim_line():
 func _draw_trajectory():
 	if _is_aiming:
 		if !has_node("Launcher/TrajectoryGhost"):
-			var g = Ghost.instance()
+			var g = TrajGhost.instance()
 			$Launcher.add_child(g)
 		elif _new_pos != Aim.position:
 			$Launcher/TrajectoryGhost.queue_free()
