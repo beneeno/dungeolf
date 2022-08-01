@@ -9,25 +9,37 @@ var _line_position = Vector2()
 var _is_aiming = false
 var _is_panning = false
 var _mouse_on_ball = false
+var _limits = Rect2()
+var _cell = Vector2()
+var _tiles = Rect2()
+var _tiles_mid = Vector2()
+var _cam_left = int()
+var _cam_right = int()
+var _cam_up = int()
+var _cam_down = int()
 
 onready var Ghost = load("res://Scenes/TrajectoryGhost.tscn")
 onready var Line = $Launcher/TrajectoryLine
 onready var Trail = $CPUParticles2D
 onready var Aim = $Launcher/Aim
 onready var _vp = get_viewport_rect().size / 2
-onready var _limits = get_node("../TileMapMain").get_used_rect()
-onready var _cell = get_node("../TileMapMain").cell_size
-onready var _tiles = Rect2(_limits.position * _cell, (_limits.position * _cell) + (_limits.size * _cell))
-onready var _tiles_mid = (_limits.position * _cell) + ((_limits.size * _cell) / 2)
-onready var _cam_left = _tiles.position.x + _vp.x - 20
-onready var _cam_right = _tiles.size.x - _vp.x + 20
-onready var _cam_up = _tiles.position.y + _vp.y - 20
-onready var _cam_down = _tiles.size.y - _vp.y + 20
 
 func _ready():
+	# Initiate camera
 	$CamTarget.global_position = global_position
 	$Camera2D.global_position = global_position
 	_cam_lastpos = global_position
+	
+	# Check for tilemap and calculate camera limits
+	if has_node("../TileMapMain"):
+		_limits = get_node("../TileMapMain").get_used_rect()
+		_cell = get_node("../TileMapMain").cell_size
+		_tiles = Rect2(_limits.position * _cell, (_limits.position * _cell) + (_limits.size * _cell))
+		_tiles_mid = (_limits.position * _cell) + ((_limits.size * _cell) / 2)
+		_cam_left = _tiles.position.x + _vp.x - 20
+		_cam_right = _tiles.size.x - _vp.x + 20
+		_cam_up = _tiles.position.y + _vp.y - 20
+		_cam_down = _tiles.size.y - _vp.y + 20
 
 func _process(_delta):
 	_draw_aim_line()
@@ -191,17 +203,18 @@ func _camera():
 		$Camera2D.position = $CamTarget.position
 
 	# Keep camera in boundary
-	if (_cam_right - _cam_left) > 0:
-		$CamTarget.global_position.x = clamp($CamTarget.global_position.x, _cam_left, _cam_right)
-		$Camera2D.global_position.x = clamp($Camera2D.global_position.x, _cam_left, _cam_right)
-	else:
-		$CamTarget.global_position.x = _tiles_mid.x
-		$Camera2D.global_position.x = _tiles_mid.x
-	if (_cam_down - _cam_up) > 0:
-		$CamTarget.global_position.y = clamp($CamTarget.global_position.y, _cam_up, _cam_down)
-		$Camera2D.global_position.y = clamp($Camera2D.global_position.y, _cam_up, _cam_down)
-	else:
-		$CamTarget.global_position.y = _tiles_mid.y
-		$Camera2D.global_position.y = _tiles_mid.y
+	if has_node("../TileMapMain"):
+		if (_cam_right - _cam_left) > 0:
+			$CamTarget.global_position.x = clamp($CamTarget.global_position.x, _cam_left, _cam_right)
+			$Camera2D.global_position.x = clamp($Camera2D.global_position.x, _cam_left, _cam_right)
+		else:
+			$CamTarget.global_position.x = _tiles_mid.x
+			$Camera2D.global_position.x = _tiles_mid.x
+		if (_cam_down - _cam_up) > 0:
+			$CamTarget.global_position.y = clamp($CamTarget.global_position.y, _cam_up, _cam_down)
+			$Camera2D.global_position.y = clamp($Camera2D.global_position.y, _cam_up, _cam_down)
+		else:
+			$CamTarget.global_position.y = _tiles_mid.y
+			$Camera2D.global_position.y = _tiles_mid.y
 	
 	_cam_lastpos = $Camera2D.global_position

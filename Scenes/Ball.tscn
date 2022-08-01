@@ -8,6 +8,7 @@
 colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0.196078 )
 
 [sub_resource type="CircleShape2D" id=2]
+radius = 6.0
 
 [sub_resource type="Curve" id=4]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
