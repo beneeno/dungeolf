@@ -25,7 +25,9 @@ onready var _cam_up = _tiles.position.y + _vp.y - 20
 onready var _cam_down = _tiles.size.y - _vp.y + 20
 
 func _ready():
-	pass
+	$CamTarget.global_position = global_position
+	$Camera2D.global_position = global_position
+	_cam_lastpos = global_position
 
 func _process(_delta):
 	_draw_aim_line()
