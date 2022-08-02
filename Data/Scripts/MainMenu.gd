@@ -1,7 +1,17 @@
 extends Control
 
+var levels = LevelNames.dict
+var Level = preload("res://Data/Scenes/UI/LevelButton.tscn")
+
 func _ready():
-	pass
+	# Create level list, use autoloaded LevelNames dictionary for names
+	for i in levels:
+		var name = levels[i]
+		var l = Level.instance()
+		l.add_to_group("Buttons")
+		l.text = ("Level " + str(i) + ": " + name)
+		l.level_path = ("res://Data/Scenes/Levels/Level" + str(i) + ".tscn")
+		$Levels/VBoxContainer.add_child(l)
 
 func _on_PlayButton_pressed():
 	if not $AnimationPlayer.is_playing():
