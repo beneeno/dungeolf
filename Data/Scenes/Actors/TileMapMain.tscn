@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Data/Scripts/TileMapMain.gd" type="Script" id=1]
 [ext_resource path="res://Data/Resources/tileset_main.tres" type="TileSet" id=2]
 [ext_resource path="res://Data/Scenes/Actors/Tile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Data/Scenes/Actors/Hole.tscn" type="PackedScene" id=4]
 
 [node name="TileMapMain" type="TileMap"]
 tile_set = ExtResource( 2 )
@@ -13,3 +14,4 @@ collision_mask = 0
 format = 1
 script = ExtResource( 1 )
 Tile = ExtResource( 3 )
+Hole = ExtResource( 4 )

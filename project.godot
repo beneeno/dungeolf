@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="dungeolf"
-run/main_scene="res://Data/Scenes/Levels/GameTest.tscn"
+run/main_scene="res://Data/Scenes/UI/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [display]
