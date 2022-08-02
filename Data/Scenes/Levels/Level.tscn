@@ -11,3 +11,15 @@ script = ExtResource( 3 )
 
 [node name="Ball" parent="." instance=ExtResource( 2 )]
 z_index = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MenuButton" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -20.0
+margin_right = 39.0
+focus_mode = 0
+text = "Menu"
+
+[connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
