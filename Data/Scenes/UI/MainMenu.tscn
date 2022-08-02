@@ -1,0 +1,306 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Data/Scripts/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://addons/SmoothScroll/SmoothScrollContainer.gd" type="Script" id=2]
+
+[sub_resource type="Animation" id=4]
+resource_name = "Levels_Close"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Levels:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 80, -0.25, 0, 0.25, 0, 390, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Menu:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -280, -0.25, 0, 0.25, 0, 30, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "Levels_Open"
+length = 0.4
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Levels:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 390, -0.25, 0, 0.25, 0, 80, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Menu:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 30, -0.25, 0, 0.25, 0, -280, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.4 )
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Levels:rect_position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 80, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Levels:rect_position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 10, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Menu:rect_position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 30, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Menu:rect_position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 120, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+reset_on_save = false
+anims/Levels_Close = SubResource( 4 )
+anims/Levels_Open = SubResource( 1 )
+anims/RESET = SubResource( 3 )
+
+[node name="Menu" type="VBoxContainer" parent="."]
+anchor_left = 0.091
+anchor_top = 0.833
+anchor_right = 0.091
+anchor_bottom = 0.833
+margin_left = -4.944
+margin_top = -59.928
+margin_right = 65.056
+margin_bottom = 10.072
+
+[node name="PlayButton" type="Button" parent="Menu" groups=["Buttons"]]
+margin_right = 70.0
+margin_bottom = 20.0
+focus_neighbour_top = NodePath("../QuitButton")
+focus_mode = 0
+text = "Play"
+
+[node name="OptionsButton" type="Button" parent="Menu" groups=["Buttons"]]
+margin_top = 24.0
+margin_right = 70.0
+margin_bottom = 44.0
+focus_mode = 0
+text = "Options"
+
+[node name="QuitButton" type="Button" parent="Menu" groups=["Buttons"]]
+margin_top = 48.0
+margin_right = 70.0
+margin_bottom = 68.0
+focus_neighbour_bottom = NodePath("../PlayButton")
+focus_mode = 0
+text = "Quit"
+
+[node name="Levels" type="Control" parent="."]
+margin_left = 390.0
+margin_right = 390.0
+
+[node name="LevelsBackButton" type="Button" parent="Levels" groups=["Buttons"]]
+margin_top = 10.0
+margin_right = 42.0
+margin_bottom = 30.0
+text = "Back"
+
+[node name="SmoothScrollContainer" type="ScrollContainer" parent="Levels"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 50.0
+margin_right = 306.0
+margin_bottom = 216.0
+script = ExtResource( 2 )
+damping = 0.5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Levels/SmoothScrollContainer"]
+margin_right = 244.0
+margin_bottom = 476.0
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_right = 244.0
+margin_bottom = 20.0
+text = "Level 1"
+align = 0
+
+[node name="Button2" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 24.0
+margin_right = 244.0
+margin_bottom = 44.0
+text = "Level 2"
+align = 0
+
+[node name="Button3" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 48.0
+margin_right = 244.0
+margin_bottom = 68.0
+text = "Level 3"
+align = 0
+
+[node name="Button4" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 244.0
+margin_bottom = 92.0
+text = "Level 4"
+align = 0
+
+[node name="Button5" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 96.0
+margin_right = 244.0
+margin_bottom = 116.0
+text = "Level 5"
+align = 0
+
+[node name="Button6" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 120.0
+margin_right = 244.0
+margin_bottom = 140.0
+text = "Level 6"
+align = 0
+
+[node name="Button7" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 144.0
+margin_right = 244.0
+margin_bottom = 164.0
+text = "Level 7"
+align = 0
+
+[node name="Button8" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 168.0
+margin_right = 244.0
+margin_bottom = 188.0
+text = "Level 8"
+align = 0
+
+[node name="Button9" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 244.0
+margin_bottom = 212.0
+text = "Level 9"
+align = 0
+
+[node name="Button10" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 216.0
+margin_right = 244.0
+margin_bottom = 236.0
+text = "Level 10"
+align = 0
+
+[node name="Button11" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 240.0
+margin_right = 244.0
+margin_bottom = 260.0
+text = "Level 11"
+align = 0
+
+[node name="Button12" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 264.0
+margin_right = 244.0
+margin_bottom = 284.0
+text = "Level 12"
+align = 0
+
+[node name="Button13" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 288.0
+margin_right = 244.0
+margin_bottom = 308.0
+text = "Level 13"
+align = 0
+
+[node name="Button14" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 312.0
+margin_right = 244.0
+margin_bottom = 332.0
+text = "Level 14"
+align = 0
+
+[node name="Button15" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 336.0
+margin_right = 244.0
+margin_bottom = 356.0
+text = "Level 15"
+align = 0
+
+[node name="Button16" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 360.0
+margin_right = 244.0
+margin_bottom = 380.0
+text = "Level 16"
+align = 0
+
+[node name="Button17" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 384.0
+margin_right = 244.0
+margin_bottom = 404.0
+text = "Level 17"
+align = 0
+
+[node name="Button18" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 408.0
+margin_right = 244.0
+margin_bottom = 428.0
+text = "Level 18"
+align = 0
+
+[node name="Button19" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 432.0
+margin_right = 244.0
+margin_bottom = 452.0
+text = "Level 19"
+align = 0
+
+[node name="Button20" type="Button" parent="Levels/SmoothScrollContainer/VBoxContainer"]
+margin_top = 456.0
+margin_right = 244.0
+margin_bottom = 476.0
+text = "Level 20"
+align = 0
+
+[connection signal="pressed" from="Menu/PlayButton" to="." method="_on_PlayButton_pressed"]
+[connection signal="pressed" from="Menu/OptionsButton" to="." method="_on_OptionsButton_pressed"]
+[connection signal="pressed" from="Menu/QuitButton" to="." method="_on_QuitButton_pressed"]
+[connection signal="pressed" from="Levels/LevelsBackButton" to="." method="_on_LevelsBackButton_pressed"]

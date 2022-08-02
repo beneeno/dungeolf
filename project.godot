@@ -23,6 +23,10 @@ window/size/test_height=1080
 window/stretch/mode="viewport"
 window/stretch/aspect="keep"
 
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/SmoothScroll/plugin.cfg" )
+
 [importer_defaults]
 
 texture={
