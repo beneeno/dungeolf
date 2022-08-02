@@ -1,11 +1,11 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Data/Scripts/Block.gd" type="Script" id=1]
+[ext_resource path="res://Data/Scripts/Tile.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5, 5 )
 
-[node name="Block" type="StaticBody2D"]
+[node name="Tile" type="StaticBody2D"]
 collision_layer = 2
 collision_mask = 0
 script = ExtResource( 1 )

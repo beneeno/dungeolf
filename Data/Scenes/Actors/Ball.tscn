@@ -19,7 +19,7 @@ atlas = ExtResource( 2 )
 region = Rect2( 0, 0, 10, 10 )
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 4.12311
+radius = 3.0
 
 [node name="Ball" type="KinematicBody2D"]
 collision_mask = 2

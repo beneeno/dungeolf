@@ -162,6 +162,7 @@ margin_left = -76.0
 margin_top = 168.0
 margin_right = -6.0
 margin_bottom = 188.0
+focus_mode = 0
 text = "Back"
 
 [node name="Levels" type="ScrollContainer" parent="."]
