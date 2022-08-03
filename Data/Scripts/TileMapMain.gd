@@ -41,6 +41,9 @@ func _ready():
 			set_cellv(tiles[i], -1)
 		
 		# Fix holes (dude wtf is this shit, why am i doing this)
+		# Ben, in case you need to change this- you might need to change the grid size
+		# of the "FixHoles" tilemap in the TileMapMain scene. But trust me, and DONT CHANGE IT.
+		# JUST PICK ONE FREAKIN ART STYLE DUDE, STOP CHANGING IT EVERY FEW DAYS. JESUS CHRIST
 		if id == ROCK:
 			for adjacent in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 				if not get_cellv(tiles[i] + adjacent) in [-1, ROCK, BORDER]:
