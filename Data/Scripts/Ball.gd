@@ -33,15 +33,16 @@ func _ready():
 	_cam_lastpos = global_position
 	
 	# Check for tilemap and calculate camera limits
+	var margin = 48
 	if has_node("../TileMapMain"):
 		_limits = get_node("../TileMapMain").get_used_rect()
 		_cell = get_node("../TileMapMain").cell_size
 		_tiles = Rect2(_limits.position * _cell, (_limits.position * _cell) + (_limits.size * _cell))
 		_tiles_mid = (_limits.position * _cell) + ((_limits.size * _cell) / 2)
-		_cam_left = _tiles.position.x + _vp.x - 20
-		_cam_right = _tiles.size.x - _vp.x + 20
-		_cam_up = _tiles.position.y + _vp.y - 20
-		_cam_down = _tiles.size.y - _vp.y + 20
+		_cam_left = _tiles.position.x + _vp.x - margin
+		_cam_right = _tiles.size.x - _vp.x + margin
+		_cam_up = _tiles.position.y + _vp.y - margin
+		_cam_down = _tiles.size.y - _vp.y + margin
 
 func _process(_delta):
 	_draw_aim_line()
