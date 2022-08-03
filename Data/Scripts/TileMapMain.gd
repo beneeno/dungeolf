@@ -2,6 +2,7 @@ extends TileMap
 
 const ROCK = 0
 const BRICK = 1
+const BORDER = 2
 
 const bounciness = {
 	ROCK: 0.5,
@@ -22,10 +23,10 @@ func _ready():
 	var tiles = get_used_cells()
 	for i in tiles.size():
 		var pos = map_to_world(tiles[i]) + Vector2(6, 6)
-		var id = get_cell(tiles[i].x, tiles[i].y)
+		var id = get_cellv(tiles[i])
 		
-		if id != 2:
-			# Instance based on tile id
+		# Instance based on tile id
+		if id != BORDER:
 			match id:
 				ROCK, BRICK:
 					t = Tile.instance()
@@ -38,3 +39,22 @@ func _ready():
 		else:
 			# Delete border
 			set_cellv(tiles[i], -1)
+		
+		# Fix holes (dude wtf is this shit, why am i doing this)
+		if id == ROCK:
+			for adjacent in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
+				if not get_cellv(tiles[i] + adjacent) in [-1, ROCK, BORDER]:
+					var fixpos = tiles[i] * 6
+					match adjacent:
+						Vector2.LEFT:
+							$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
+							$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
+						Vector2.RIGHT:
+							$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
+							$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
+						Vector2.UP:
+							$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
+							$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
+						Vector2.DOWN:
+							$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
+							$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
