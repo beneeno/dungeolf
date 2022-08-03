@@ -7,7 +7,7 @@
 
 [node name="TileMapMain" type="TileMap"]
 tile_set = ExtResource( 2 )
-cell_size = Vector2( 10, 10 )
+cell_size = Vector2( 12, 12 )
 cell_tile_origin = 1
 collision_layer = 0
 collision_mask = 0

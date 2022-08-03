@@ -1,15 +1,14 @@
 tool
 extends TileSet
 
-const GRASS = 0
+const ROCK = 0
 const BRICK = 1
-const HGRASS = 2
-const HBRICK = 3
+const BORDER = 2
 
 var binds = {
-	GRASS: [BRICK, HGRASS],
-	BRICK: [HBRICK]
+	ROCK: [BORDER]
 }
 
 func _is_tile_bound(id, nid):
-	return nid in binds[id]
+	if id in binds:
+		return nid in binds[id]
