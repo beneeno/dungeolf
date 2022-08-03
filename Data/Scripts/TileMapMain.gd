@@ -1,41 +1,37 @@
 extends TileMap
 
-const ROCK = 0
-const BRICK = 1
-const BORDER = 2
-
 const bounciness = {
-	ROCK: 0.5,
-	BRICK: 0.8
+	"tile_rock": 0.5,
+	"tile_brick": 0.8
 }
 const roughness = {
-	ROCK: 0.01,
-	BRICK: 0.01
+	"tile_rock": 0.01,
+	"tile_brick": 0.01
 }
 
 export var Tile : PackedScene
 export var Hole : PackedScene
 
-var t
 
-
-func _ready():
+func _ready():	
 	var tiles = get_used_cells()
 	for i in tiles.size():
 		var pos = map_to_world(tiles[i]) + Vector2(6, 6)
-		var id = get_cellv(tiles[i])
+		var tile_name = tile_set.tile_get_name(get_cellv(tiles[i]))
 		
 		# Instance based on tile id
-		if id != BORDER:
-			match id:
-				ROCK, BRICK:
+		if tile_name != "border":
+			var t
+			match tile_name:
+				"tile_rock", "tile_brick":
 					t = Tile.instance()
-					t.init(bounciness[id], roughness[id])
-	#			hole1, hole2:
-	#				t = Hole.instance()
+					t.init(bounciness[tile_name], roughness[tile_name])
+				"flag":
+					t = null
 			
-			t.position = pos
-			get_parent().call_deferred("add_child", t)
+			if t != null:
+				t.position = pos
+				get_parent().call_deferred("add_child", t)
 		else:
 			# Delete border
 			set_cellv(tiles[i], -1)
@@ -44,20 +40,21 @@ func _ready():
 		# Ben, in case you need to change this- you might need to change the grid size
 		# of the "FixHoles" tilemap in the TileMapMain scene. But trust me, and DONT CHANGE IT.
 		# JUST PICK ONE FREAKIN ART STYLE DUDE, STOP CHANGING IT EVERY FEW DAYS. JESUS CHRIST
-		if id == ROCK:
+		if tile_name == "tile_rock":
 			for adjacent in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
-				if not get_cellv(tiles[i] + adjacent) in [-1, ROCK, BORDER]:
-					var fixpos = tiles[i] * 6
-					match adjacent:
-						Vector2.LEFT:
-							$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
-							$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
-						Vector2.RIGHT:
-							$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
-							$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
-						Vector2.UP:
-							$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
-							$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
-						Vector2.DOWN:
-							$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
-							$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
+				if get_cellv(tiles[i] + adjacent) != -1:
+					if not tile_set.tile_get_name(get_cellv(tiles[i] + adjacent)) in ["tile_rock", "border"]:
+						var fixpos = tiles[i] * 6
+						match adjacent:
+							Vector2.LEFT:
+								$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
+								$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
+							Vector2.RIGHT:
+								$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
+								$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
+							Vector2.UP:
+								$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
+								$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
+							Vector2.DOWN:
+								$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
+								$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
