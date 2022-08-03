@@ -6,9 +6,12 @@ const BRICK = 1
 const BORDER = 2
 
 var binds = {
-	ROCK: [BORDER]
+	"tile_rock": ["border"]
 }
 
 func _is_tile_bound(id, nid):
-	if id in binds:
-		return nid in binds[id]
+	var idn = tile_get_name(id)
+	if idn in binds:
+		if nid != -1:
+			print(nid)
+			return tile_get_name(nid) in binds[idn]
