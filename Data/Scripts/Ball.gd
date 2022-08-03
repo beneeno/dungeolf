@@ -4,7 +4,7 @@ export var TrajGhost: PackedScene
 
 var velocity = Vector2()
 var gravity = 400
-var power = 10
+var power = 6
 
 var _cam_lastpos = Vector2()
 var _new_pos = Vector2()
@@ -145,7 +145,7 @@ func _draw_particles():
 func _draw_aim_line():
 	$Launcher/PowerLine.set_point_position(1, Aim.position)
 	if _is_aiming:
-		Aim.position = get_local_mouse_position().clamped(32)
+		Aim.position = get_local_mouse_position().clamped(48)
 	else:
 		Aim.position = Vector2(0,0)
 
