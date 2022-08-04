@@ -29,7 +29,6 @@ cell_tile_origin = 1
 collision_layer = 0
 collision_mask = 0
 format = 1
-tile_data = PoolIntArray( 0, 2, 0, 2, 1, 196611, 3, 0, 196611 )
 script = ExtResource( 1 )
 Tile = ExtResource( 3 )
 Hole = ExtResource( 4 )

@@ -13,7 +13,7 @@ export var Tile : PackedScene
 export var Hole : PackedScene
 
 
-func _ready():	
+func _ready():
 	var tiles = get_used_cells()
 	for i in tiles.size():
 		var pos = map_to_world(tiles[i]) + Vector2(6, 6)
