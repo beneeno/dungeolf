@@ -10,7 +10,8 @@ const roughness = {
 }
 
 export var Tile : PackedScene
-export var Hole : PackedScene
+export var Start : PackedScene
+export var Goal : PackedScene
 
 
 func _ready():
@@ -26,8 +27,14 @@ func _ready():
 				"tile_rock", "tile_brick":
 					t = Tile.instance()
 					t.init(bounciness[tile_name], roughness[tile_name])
-				"flag":
-					t = null
+				"start":
+					t = Start.instance()
+					pos += Vector2(6, 6)
+					set_cellv(tiles[i], -1)
+				"goal_all", "goal_right", "goal_left", "goal_down", "goal_up":
+					t = Goal.instance()
+					pos += Vector2(6, 6)
+					set_cellv(tiles[i], -1)
 			
 			if t != null:
 				t.position = pos

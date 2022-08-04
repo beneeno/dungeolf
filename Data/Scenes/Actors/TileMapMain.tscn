@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Data/Scripts/TileMapMain.gd" type="Script" id=1]
 [ext_resource path="res://Data/Resources/tileset_main.tres" type="TileSet" id=2]
 [ext_resource path="res://Data/Scenes/Actors/Tile.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Data/Scenes/Actors/Hole.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Data/Scenes/Actors/Goal.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/tileset_main.png" type="Texture" id=5]
+[ext_resource path="res://Data/Scenes/Actors/Start.tscn" type="PackedScene" id=6]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tileset_main.png 0"
@@ -31,7 +32,8 @@ collision_mask = 0
 format = 1
 script = ExtResource( 1 )
 Tile = ExtResource( 3 )
-Hole = ExtResource( 4 )
+Start = ExtResource( 6 )
+Goal = ExtResource( 4 )
 
 [node name="FixHoles" type="TileMap" parent="."]
 tile_set = SubResource( 1 )
