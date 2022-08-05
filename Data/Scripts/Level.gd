@@ -25,8 +25,8 @@ func _ready():
 	else:
 		next_level_path = "res://Data/Scenes/UI/MainMenu.tscn"
 	
-	# Initiate camera
 	_cam_lastpos = global_position
+	$CanvasLayer/MenuButton.visible = true
 	
 	# Check for tilemap and calculate camera limits
 	var margin = 48

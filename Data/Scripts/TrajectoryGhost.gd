@@ -11,9 +11,11 @@ func _ready():
 
 func _physics_process(delta):
 	for i in 120:
-		_motion(delta)
+		if global_position.distance_to(get_node("/root/Level/Goal").global_position) > 3:
+			_motion(delta)
 		if Line.get_point_count() < 180:
 			Line.add_point(position)
+	
 
 func _motion(delta):
 	# Motion and velocity code
