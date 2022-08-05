@@ -11,7 +11,7 @@ func _ready():
 func _physics_process(_delta):
 	if _ball_in_area:
 		if position.distance_to(get_node("../Ball").position) < 3:
-#			get_parent().level_complete()
+			$Timer.start()
 			get_node("../Ball").z_index = -1
 			_win = true
 
@@ -26,3 +26,6 @@ func _on_Area2D_body_exited(body):
 		if _win == true:
 			get_parent().switch_camera(get_parent())
 			get_node("../Ball").queue_free()
+
+func _on_Timer_timeout():
+	get_parent().level_complete()
