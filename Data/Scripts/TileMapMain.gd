@@ -1,13 +1,17 @@
 extends TileMap
 
-const bounciness = {
+const BOUNCINESS = {
 	"tile_rock": 0.5,
 	"tile_brick": 0.8
 }
-const roughness = {
+const ROUGHNESS = {
 	"tile_rock": 0.01,
 	"tile_brick": 0.01
 }
+
+const FIX_HOLES = [
+	"tile_brick"
+]
 
 export var Tile : PackedScene
 export var Start : PackedScene
@@ -26,7 +30,7 @@ func _ready():
 			match tile_name:
 				"tile_rock", "tile_brick":
 					t = Tile.instance()
-					t.init(bounciness[tile_name], roughness[tile_name])
+					t.init(BOUNCINESS[tile_name], ROUGHNESS[tile_name])
 				"start":
 					t = Start.instance()
 					pos += Vector2(6, 6)
@@ -50,7 +54,7 @@ func _ready():
 		if tile_name == "tile_rock":
 			for adjacent in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 				if get_cellv(tiles[i] + adjacent) != -1:
-					if not tile_set.tile_get_name(get_cellv(tiles[i] + adjacent)) in ["tile_rock", "border"]:
+					if tile_set.tile_get_name(get_cellv(tiles[i] + adjacent)) in FIX_HOLES:
 						var fixpos = tiles[i] * 6
 						match adjacent:
 							Vector2.LEFT:

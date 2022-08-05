@@ -64,15 +64,5 @@ texture = SubResource( 6 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-editor_draw_screen = false
-
-[node name="CamTarget" type="Position2D" parent="."]
-
-[node name="Sprite" type="Sprite" parent="CamTarget"]
-visible = false
-scale = Vector2( 0.25, 0.25 )
-
 [connection signal="mouse_entered" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_entered"]
 [connection signal="mouse_exited" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_exited"]

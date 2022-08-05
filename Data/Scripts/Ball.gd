@@ -5,49 +5,23 @@ export var TrajGhost: PackedScene
 var velocity = Vector2()
 var gravity = 400
 var power = 6
+var mouse_on_ball = false
+var is_aiming = false
 
-var _cam_lastpos = Vector2()
 var _new_pos = Vector2()
 var _line_position = Vector2()
-var _is_aiming = false
-var _is_panning = false
-var _mouse_on_ball = false
-var _limits = Rect2()
-var _cell = Vector2()
-var _tiles = Rect2()
-var _tiles_mid = Vector2()
-var _cam_left = int()
-var _cam_right = int()
-var _cam_up = int()
-var _cam_down = int()
 
 onready var Line = $Launcher/TrajectoryLine
 onready var Trail = $CPUParticles2D
 onready var Aim = $Launcher/Aim
-onready var _vp = get_viewport_rect().size / 2
 
 func _ready():
-	# Initiate camera
-	$CamTarget.global_position = global_position
-	$Camera2D.global_position = global_position
-	_cam_lastpos = global_position
-	
-	# Check for tilemap and calculate camera limits
-	var margin = 48
-	if has_node("../TileMapMain"):
-		_limits = get_node("../TileMapMain").get_used_rect()
-		_cell = get_node("../TileMapMain").cell_size
-		_tiles = Rect2(_limits.position * _cell, (_limits.position * _cell) + (_limits.size * _cell))
-		_tiles_mid = (_limits.position * _cell) + ((_limits.size * _cell) / 2)
-		_cam_left = _tiles.position.x + _vp.x - margin
-		_cam_right = _tiles.size.x - _vp.x + margin
-		_cam_up = _tiles.position.y + _vp.y - margin
-		_cam_down = _tiles.size.y - _vp.y + margin
+	if get_parent().name == "Level":
+		get_parent().switch_camera(self)
 
 func _process(_delta):
 	_draw_aim_line()
 	_draw_particles()
-	_camera()
 
 func _physics_process(delta):
 	_motion(delta)
@@ -94,45 +68,34 @@ func _shoot():
 	var aim_point = Aim.position
 	velocity = -aim_point * power
 	_line_position = Line.global_position
-	_is_aiming = false
+	is_aiming = false
 
 
 ### INPUT FUNCTIONS
 func _on_ClickableZone_mouse_entered():
-	_mouse_on_ball = true
+	mouse_on_ball = true
 
 func _on_ClickableZone_mouse_exited():
-	_mouse_on_ball = false
+	mouse_on_ball = false
 
-func _input(event):
-	# Start aim or start panning
+func _input(_event):
+	# Start aim
 	if Input.is_action_just_pressed("lmb"):
-		if _mouse_on_ball and velocity == Vector2.ZERO:
-			_is_aiming = true
-		if !_mouse_on_ball:
-			_is_panning = true
+		if mouse_on_ball and velocity == Vector2.ZERO:
+			is_aiming = true
 	
-	# Stop aiming, shoot, or stop panning
+	# Stop aiming or shoot
 	if Input.is_action_just_released("lmb"):
-		if _is_aiming:
-			if _mouse_on_ball:
-				_is_aiming = false
+		if is_aiming:
+			if mouse_on_ball:
+				is_aiming = false
 			else:
 				_shoot()
-		elif _is_panning:
-			_is_panning = false
-			
 	
 	# Stop aiming, or focus ball/goal
 	if Input.is_action_just_pressed("rmb"):
-		if _is_aiming:
-			_is_aiming = false
-		elif !_is_panning:
-			$CamTarget.global_position = global_position
-	
-	if event is InputEventMouseMotion:
-		if _is_panning:
-			$CamTarget.position -= event.relative
+		if is_aiming:
+			is_aiming = false
 
 
 ### DRAWING FUNCTIONS
@@ -145,13 +108,13 @@ func _draw_particles():
 
 func _draw_aim_line():
 	$Launcher/PowerLine.set_point_position(1, Aim.position)
-	if _is_aiming:
+	if is_aiming:
 		Aim.position = get_local_mouse_position().clamped(48)
 	else:
 		Aim.position = Vector2(0,0)
 
 func _draw_trajectory():
-	if _is_aiming:
+	if is_aiming:
 		if !has_node("Launcher/TrajectoryGhost"):
 			var g = TrajGhost.instance()
 			$Launcher.add_child(g)
@@ -177,47 +140,3 @@ func _clear_trajectory():
 	else:
 		Line.position = Vector2(0, 0)
 		Line.clear_points()
-
-func _camera():
-	# Custom drag margins, ugh
-	if $CamTarget.global_position.x == $Camera2D.global_position.x:
-		# If going left
-		if velocity.x < 0 and $Camera2D.position.x < 128:
-			$CamTarget.global_position.x = _cam_lastpos.x
-			$Camera2D.global_position.x = _cam_lastpos.x
-		# If going right
-		if velocity.x > 0 and $Camera2D.position.x > -128:
-			$CamTarget.global_position.x = _cam_lastpos.x
-			$Camera2D.global_position.x = _cam_lastpos.x
-		
-	if $CamTarget.global_position.y == $Camera2D.global_position.y:
-		# If going down
-		if velocity.y > 0 and $Camera2D.position.y > -76:
-			$CamTarget.global_position.y = _cam_lastpos.y
-			$Camera2D.global_position.y = _cam_lastpos.y
-		# If going up
-		if velocity.y < 0 and $Camera2D.position.y < 76:
-			$CamTarget.global_position.y = _cam_lastpos.y
-			$Camera2D.global_position.y = _cam_lastpos.y
-	
-	# Lerp and round
-	$Camera2D.position = lerp($Camera2D.position, $CamTarget.position, 0.2)
-	if $Camera2D.position.distance_to($CamTarget.position) < 1:
-		$Camera2D.position = $CamTarget.position
-
-	# Keep camera in boundary
-	if has_node("../TileMapMain"):
-		if (_cam_right - _cam_left) > 0:
-			$CamTarget.global_position.x = clamp($CamTarget.global_position.x, _cam_left, _cam_right)
-			$Camera2D.global_position.x = clamp($Camera2D.global_position.x, _cam_left, _cam_right)
-		else:
-			$CamTarget.global_position.x = _tiles_mid.x
-			$Camera2D.global_position.x = _tiles_mid.x
-		if (_cam_down - _cam_up) > 0:
-			$CamTarget.global_position.y = clamp($CamTarget.global_position.y, _cam_up, _cam_down)
-			$Camera2D.global_position.y = clamp($Camera2D.global_position.y, _cam_up, _cam_down)
-		else:
-			$CamTarget.global_position.y = _tiles_mid.y
-			$Camera2D.global_position.y = _tiles_mid.y
-	
-	_cam_lastpos = $Camera2D.global_position

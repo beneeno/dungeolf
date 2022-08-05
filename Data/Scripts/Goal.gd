@@ -24,4 +24,5 @@ func _on_Area2D_body_exited(body):
 		_ball_in_area = false
 		
 		if _win == true:
+			get_parent().switch_camera(get_parent())
 			get_node("../Ball").queue_free()
