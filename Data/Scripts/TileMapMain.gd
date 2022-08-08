@@ -2,15 +2,19 @@ extends TileMap
 
 const BOUNCINESS = {
 	"tile_rock": 0.5,
-	"tile_brick": 0.8
+	"tile_brick": 0.5,
+	"tile_bouncy": 0.8
 }
 const ROUGHNESS = {
 	"tile_rock": 0.01,
-	"tile_brick": 0.01
+	"tile_brick": 0.01,
+	"tile_bouncy": 0.01
 }
 
 const FIX_HOLES = [
-	"tile_brick"
+	"tile_brick",
+	"tile_rock",
+	"tile_bouncy"
 ]
 
 export var Tile : PackedScene
@@ -28,7 +32,7 @@ func _ready():
 		if tile_name != "border":
 			var t
 			match tile_name:
-				"tile_rock", "tile_brick":
+				"tile_rock", "tile_brick", "tile_bouncy":
 					t = Tile.instance()
 					t.init(BOUNCINESS[tile_name], ROUGHNESS[tile_name])
 				"start":
@@ -51,11 +55,12 @@ func _ready():
 		# Ben, in case you need to change this- you might need to change the grid size
 		# of the "FixHoles" tilemap in the TileMapMain scene. But trust me, and DONT CHANGE IT.
 		# JUST PICK ONE FREAKIN ART STYLE DUDE, STOP CHANGING IT EVERY FEW DAYS. JESUS CHRIST
-		if tile_name == "tile_rock":
+		if tile_name == "tile_rock" or tile_name == "tile_bouncy":
 			for adjacent in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 				if get_cellv(tiles[i] + adjacent) != -1:
-					if tile_set.tile_get_name(get_cellv(tiles[i] + adjacent)) in FIX_HOLES:
-						var fixpos = tiles[i] * 6
+					var adj_name = tile_set.tile_get_name(get_cellv(tiles[i] + adjacent))
+					var fixpos = tiles[i] * 6
+					if adj_name in FIX_HOLES and tile_name != adj_name:
 						match adjacent:
 							Vector2.LEFT:
 								$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
