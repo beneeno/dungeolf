@@ -49,6 +49,12 @@ func _motion(delta):
 		else: # If collision is NOT the floor, always bounce
 			velocity = velocity.bounce(collision.normal) * bounce
 	
+		# Throttle power when on mud
+		if collision.collider.roughness == 0.1:
+			power = 3
+		else:
+			power = 6
+	
 	# Motion limits
 	if abs(velocity.x) < 2:
 		velocity.x = 0
