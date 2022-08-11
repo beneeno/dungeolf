@@ -14,5 +14,4 @@ func _is_tile_bound(id, nid):
 	var idn = tile_get_name(id)
 	if idn in binds:
 		if nid != -1:
-			print(nid)
 			return tile_get_name(nid) in binds[idn]

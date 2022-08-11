@@ -17,12 +17,17 @@ const FIX_HOLES = [
 	"tile_brick",
 	"tile_rock",
 	"tile_bouncy",
-	"tile_mud"
+	"tile_mud",
+	"spikes_left",
+	"spikes_right",
+	"spikes_up",
+	"spikes_down"
 ]
 
 export var Tile : PackedScene
 export var Start : PackedScene
 export var Goal : PackedScene
+export var Spikes : PackedScene
 
 
 func _ready():
@@ -46,6 +51,17 @@ func _ready():
 					t = Goal.instance()
 					pos += Vector2(6, 6)
 					set_cellv(tiles[i], -1)
+				"spikes_left", "spikes_right", "spikes_up", "spikes_down":
+					t = Spikes.instance()
+					match tile_name:
+						"spikes_left":
+							t.rotation_degrees = 270
+						"spikes_right":
+							t.rotation_degrees = 90
+						"spikes_up":
+							t.rotation_degrees = 0
+						"spikes_down":
+							t.rotation_degrees = 180
 			
 			if t != null:
 				t.position = pos

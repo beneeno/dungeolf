@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Data/Scripts/TileMapMain.gd" type="Script" id=1]
 [ext_resource path="res://Data/Resources/tileset_main.tres" type="TileSet" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Data/Scenes/Actors/Goal.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/tileset_main.png" type="Texture" id=5]
 [ext_resource path="res://Data/Scenes/Actors/Start.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Data/Scenes/Actors/Spikes.tscn" type="PackedScene" id=7]
 
 [sub_resource type="TileSet" id=1]
 0/name = "tileset_main.png 0"
@@ -34,6 +35,7 @@ script = ExtResource( 1 )
 Tile = ExtResource( 3 )
 Start = ExtResource( 6 )
 Goal = ExtResource( 4 )
+Spikes = ExtResource( 7 )
 
 [node name="FixHoles" type="TileMap" parent="."]
 show_behind_parent = true

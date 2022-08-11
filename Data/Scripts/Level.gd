@@ -139,7 +139,15 @@ func level_complete():
 	if error != OK:
 		push_error(str(error))
 
+func level_failed():
+	$CanvasLayer/RetryButton.visible = true
+
 func _on_MenuButton_pressed():
 	var error = get_tree().change_scene("res://Data/Scenes/UI/MainMenu.tscn")
+	if error != OK:
+		push_error(str(error))
+
+func _on_RetryButton_pressed():
+	var error = get_tree().reload_current_scene()
 	if error != OK:
 		push_error(str(error))
