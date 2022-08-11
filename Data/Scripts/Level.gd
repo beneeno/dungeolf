@@ -44,8 +44,8 @@ func _process(_delta):
 
 func _input(event):
 	# Reset camera position
-	if Input.is_action_just_pressed("rmb"):
-		if !_is_panning and has_node("Ball"):
+	if Input.is_action_just_pressed("rmb") and not Input.is_action_pressed("lmb"):
+		if has_node("Ball"):
 			if get_node(CamPath).get_parent() != $Ball:
 				get_node(CamTargetPath).global_position = $Ball.global_position
 			switch_camera(get_node("Ball"))
@@ -69,6 +69,9 @@ func _input(event):
 		if _is_panning:
 			get_node(CamTargetPath).position -= event.relative
 			switch_camera(self)
+		elif has_node("Ball"):
+			if $Ball.is_aiming == true:
+				switch_camera(self)
 
 
 func _camera():
@@ -116,7 +119,31 @@ func _camera():
 		CamTarget.global_position.y = _tiles_mid.y
 		Cam.global_position.y = _tiles_mid.y
 	
+	# Adjust camera to help aim near edges
+	if has_node("Ball"):
+		#Check down
+		if (get_camera_rect().size.y - $Ball.position.y) < 48:
+			if $Ball/Launcher/Aim.global_position.y > $Ball.global_position.y:
+				get_node(CamTargetPath).position.y += 2
+		#Check Up
+		if ($Ball.position.y - get_camera_rect().position.y) < 48:
+			if $Ball/Launcher/Aim.global_position.y < $Ball.global_position.y:
+				get_node(CamTargetPath).position.y -= 2
+		#Check Left
+		if ($Ball.position.x - get_camera_rect().position.x) < 48:
+			if $Ball/Launcher/Aim.global_position.x < $Ball.global_position.x:
+				get_node(CamTargetPath).position.x -= 2
+		#Check Right
+		if (get_camera_rect().size.x - $Ball.position.x) < 48:
+			if $Ball/Launcher/Aim.global_position.x > $Ball.global_position.x:
+				get_node(CamTargetPath).position.x += 2
+	
 	_cam_lastpos = Cam.global_position
+
+func get_camera_rect():
+	var pos = get_node(CamPath).get_camera_position()
+	var half = get_viewport_rect().size / 2
+	return Rect2(pos - half, pos + half)
 
 func switch_camera(target):
 	var c = get_node(CamPath)
