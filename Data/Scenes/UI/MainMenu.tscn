@@ -178,6 +178,24 @@ damping = 0.5
 margin_right = 256.0
 size_flags_horizontal = 3
 
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+text = "stop fucking clicking the options button
+you know there are no options
+stop harassing me about it, i know? okay? i also know the 
+quit butotn doesnt do shit either but crash the game.
+im not a fricking idiot, it works on a windows export, ok?
+deal with it. seriously. and leave the options button alone
+or im going to restrict your access to my super cool
+shitty golf game that im letting you, with my own 
+generosity, play in its extremely early stages in order to
+help me test it. who knows maybe this shitll go wild know
+what im saying? probably not but you sure as hell wont know
+if you keep clicking that god damn button jesus christ
+just leave it alone, i swear to got its like back when osama b"
+
 [connection signal="pressed" from="Menu/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="Menu/OptionsButton" to="." method="_on_OptionsButton_pressed"]
 [connection signal="pressed" from="Menu/QuitButton" to="." method="_on_QuitButton_pressed"]

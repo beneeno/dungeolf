@@ -82,14 +82,18 @@ func _ready():
 					if adj_name in FIX_HOLES and tile_name != adj_name:
 						match adjacent:
 							Vector2.LEFT:
-								$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
-								$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
+								if not adj_name in ["spikes_right", "spikes_up", "spikes_down"]:
+									$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
+									$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
 							Vector2.RIGHT:
-								$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
-								$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
+								if not adj_name in ["spikes_left", "spikes_up", "spikes_down"]:
+									$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
+									$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
 							Vector2.UP:
-								$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
-								$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
+								if not adj_name in ["spikes_left", "spikes_right", "spikes_down"]:
+									$FixHoles.set_cell(fixpos.x, fixpos.y, 0)
+									$FixHoles.set_cell(fixpos.x+5, fixpos.y, 0)
 							Vector2.DOWN:
-								$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
-								$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
+								if not adj_name in ["spikes_left", "spikes_right", "spikes_up"]:
+									$FixHoles.set_cell(fixpos.x, fixpos.y+5, 0)
+									$FixHoles.set_cell(fixpos.x+5, fixpos.y+5, 0)
