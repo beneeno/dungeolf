@@ -1,5 +1,6 @@
 extends Node2D
 
+export(int) var Par
 export var CamPath : NodePath
 export var CamTargetPath : NodePath
 

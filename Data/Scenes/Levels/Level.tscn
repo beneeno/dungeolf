@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Data/Scenes/Actors/TileMapMain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://Data/Scripts/Level.gd" type="Script" id=3]
+[ext_resource path="res://Data/Resources/game_theme.tres" type="Theme" id=4]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 3 )
@@ -20,6 +21,7 @@ anchor_bottom = 1.0
 margin_top = -20.0
 margin_right = 39.0
 focus_mode = 0
+theme = ExtResource( 4 )
 text = "Menu"
 
 [node name="RetryButton" type="Button" parent="CanvasLayer"]
@@ -32,6 +34,7 @@ margin_left = -24.0
 margin_top = -10.0
 margin_right = 24.0
 margin_bottom = 10.0
+theme = ExtResource( 4 )
 text = "Retry"
 
 [node name="Camera2D" type="Camera2D" parent="."]

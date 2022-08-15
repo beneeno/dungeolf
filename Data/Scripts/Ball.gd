@@ -21,7 +21,7 @@ func _ready():
 		get_parent().switch_camera(self)
 
 func _process(_delta):
-	_draw_particles()
+	_speed_particles()
 
 func _physics_process(delta):
 	if is_dead == false:
@@ -108,7 +108,7 @@ func _input(_event):
 
 
 ### DRAWING FUNCTIONS
-func _draw_particles():
+func _speed_particles():
 	var speed = abs(velocity.x) + abs(velocity.y)
 	if speed > 200:
 		Trail.emitting = true

@@ -12,6 +12,7 @@ config_version=4
 
 config/name="dungeolf"
 run/main_scene="res://Data/Scenes/UI/MainMenu.tscn"
+boot_splash/use_filter=false
 config/icon="res://icon.png"
 
 [autoload]
@@ -87,3 +88,4 @@ vram_compression/import_etc=true
 vram_compression/import_etc2=false
 environment/default_clear_color=Color( 0.105882, 0.121569, 0.129412, 1 )
 environment/default_environment="res://default_env.tres"
+quality/dynamic_fonts/use_oversampling=false
