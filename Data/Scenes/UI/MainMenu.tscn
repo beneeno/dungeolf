@@ -46,7 +46,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"points": PoolRealArray( -218, -0.25, 0, 0.25, 0, 83.5, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( -242, -0.25, 0, 0.25, 0, 75, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.4 )
 }
 tracks/4/type = "bezier"
@@ -100,7 +100,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"points": PoolRealArray( 83.5, -0.25, 0, 0.25, 0, -218, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 75, -0.25, 0, 0.25, 0, -242, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.4 )
 }
 tracks/4/type = "bezier"
@@ -126,6 +126,16 @@ tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0 )
 }
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("TextureRect:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 75, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -145,10 +155,10 @@ tile_data = PoolIntArray( -786431, 2, 0, -786430, 2, 0, -786429, 2, 0, -786428, 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -108.5
-margin_top = 20.0
-margin_right = 108.5
-margin_bottom = 81.0
+margin_left = -117.0
+margin_top = 24.0
+margin_right = 117.0
+margin_bottom = 90.0
 texture = ExtResource( 4 )
 
 [node name="Menu" type="VBoxContainer" parent="."]
