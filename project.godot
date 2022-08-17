@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 
 LevelNames="*res://Data/Scripts/LevelNames.gd"
 
+[debug]
+
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/width=384

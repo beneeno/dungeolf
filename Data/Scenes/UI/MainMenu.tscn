@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/Scripts/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://addons/SmoothScroll/SmoothScrollContainer.gd" type="Script" id=2]
 [ext_resource path="res://Data/Resources/game_theme.tres" type="Theme" id=3]
 [ext_resource path="res://Assets/title.png" type="Texture" id=4]
 [ext_resource path="res://Data/Scenes/Actors/TileMapMain.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Data/Scenes/Levels/Transition.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=4]
 resource_name = "Levels_Close"
@@ -211,6 +212,9 @@ damping = 0.5
 margin_right = 256.0
 size_flags_horizontal = 3
 
+[node name="Transition" parent="." instance=ExtResource( 6 )]
+
 [connection signal="pressed" from="Menu/PlayButton" to="." method="_on_PlayButton_pressed"]
 [connection signal="pressed" from="Menu/QuitButton" to="." method="_on_QuitButton_pressed"]
 [connection signal="pressed" from="LevelsBackButton" to="." method="_on_LevelsBackButton_pressed"]
+[connection signal="transition_out_done" from="Transition" to="." method="_on_Transition_transition_out_done"]

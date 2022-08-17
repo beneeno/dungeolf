@@ -4,6 +4,8 @@ export(int) var Par
 export var CamPath : NodePath
 export var CamTargetPath : NodePath
 
+var complete = false
+var menu_clicked = false #This is beyond sloppy. I'm getting lazy. Must finish project soon.
 var next_level_path
 var _cam_lastpos = Vector2()
 var _is_panning = false
@@ -17,8 +19,11 @@ var _cam_up = int()
 var _cam_down = int()
 
 onready var _vp = get_viewport_rect().size / 2
+onready var transition = $CanvasLayer/Transition
 
 func _ready():
+	transition.transition_in()
+	
 	# Load next level
 	var file = File.new()
 	if file.file_exists("res://Data/Scenes/Levels/Level" + str(int(filename) + 1) + ".tscn"):
@@ -163,19 +168,30 @@ func switch_camera(target):
 		t.global_position = tpos
 
 func level_complete():
-	var error = get_tree().change_scene(next_level_path)
-	if error != OK:
-		push_error(str(error))
+	complete = true
+	transition.transition_out()
 
 func level_failed():
 	$CanvasLayer/RetryButton.visible = true
 
+func _on_Transition_transition_out_done():
+	if menu_clicked == true:
+		var error = get_tree().change_scene("res://Data/Scenes/UI/MainMenu.tscn")
+		if error != OK:
+			push_error(str(error))
+	else:
+		if complete == true:
+			var error = get_tree().change_scene(next_level_path)
+			if error != OK:
+				push_error(str(error))
+		elif complete == false:
+			var error = get_tree().reload_current_scene()
+			if error != OK:
+				push_error(str(error))
+
 func _on_MenuButton_pressed():
-	var error = get_tree().change_scene("res://Data/Scenes/UI/MainMenu.tscn")
-	if error != OK:
-		push_error(str(error))
+	menu_clicked = true
+	transition.transition_out()
 
 func _on_RetryButton_pressed():
-	var error = get_tree().reload_current_scene()
-	if error != OK:
-		push_error(str(error))
+	transition.transition_out()

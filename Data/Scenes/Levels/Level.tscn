@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Data/Scenes/Actors/TileMapMain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
 [ext_resource path="res://Data/Scripts/Level.gd" type="Script" id=3]
 [ext_resource path="res://Data/Resources/game_theme.tres" type="Theme" id=4]
+[ext_resource path="res://Data/Scenes/Levels/Transition.tscn" type="PackedScene" id=5]
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 3 )
@@ -38,6 +39,8 @@ focus_mode = 0
 theme = ExtResource( 4 )
 text = "Retry"
 
+[node name="Transition" parent="CanvasLayer" instance=ExtResource( 5 )]
+
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 editor_draw_screen = false
@@ -51,3 +54,4 @@ texture = ExtResource( 2 )
 
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="transition_out_done" from="CanvasLayer/Transition" to="." method="_on_Transition_transition_out_done"]
