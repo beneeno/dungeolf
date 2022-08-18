@@ -26,7 +26,6 @@ func _process(_delta):
 	# Check if out of shots, fail level
 	if velocity == Vector2.ZERO and get_parent().Shots <= 0:
 		get_parent().level_failed()
-		print(velocity)
 
 func _physics_process(delta):
 	if is_dead == false:
@@ -57,7 +56,7 @@ func _motion(delta):
 	
 		# Throttle power when on mud
 		if collision.collider.roughness == 0.1:
-			power = 3
+			power = 3.2
 		else:
 			power = 6
 	
@@ -75,10 +74,10 @@ func _motion(delta):
 		position.y = round(position.y)
 
 func _shoot():
-	if velocity == Vector2.ZERO:
-		get_parent().Shots -= 1
 	for i in 4:
 		yield(get_tree(), "physics_frame")
+	if velocity == Vector2.ZERO:
+		get_parent().Shots -= 1
 	var aim_point = Aim.position
 	velocity = -aim_point * power
 	_line_position = Line.global_position

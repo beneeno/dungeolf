@@ -24,7 +24,12 @@ onready var transition = $CanvasLayer/Transition
 func _ready():
 	transition.transition_in()
 	
-	$CanvasLayer/LevelName.text = "Level " + str(int(filename)) + ": " + LevelNames.dict[int(filename)]
+	var levelname
+	if not int(filename) in LevelNames.dict:
+		levelname = "null"
+	else:
+		levelname = LevelNames.dict[int(filename)]
+	$CanvasLayer/LevelName.text = "Level " + str(int(filename)) + ": " + levelname
 	
 	# Load next level
 	var file = File.new()
