@@ -22,13 +22,17 @@ func _ready():
 
 func _process(_delta):
 	_speed_particles()
+	
+	# Check if out of shots, fail level
+	if velocity == Vector2.ZERO and get_parent().Shots <= 0:
+		get_parent().level_failed()
+		print(velocity)
 
 func _physics_process(delta):
 	if is_dead == false:
 		_motion(delta)
 	_draw_trajectory()
 	_draw_aim_line()
-
 
 ### MOTION FUNCTIONS
 func _motion(delta):
@@ -71,6 +75,8 @@ func _motion(delta):
 		position.y = round(position.y)
 
 func _shoot():
+	if velocity == Vector2.ZERO:
+		get_parent().Shots -= 1
 	for i in 4:
 		yield(get_tree(), "physics_frame")
 	var aim_point = Aim.position
@@ -87,7 +93,7 @@ func _on_ClickableZone_mouse_exited():
 	mouse_on_ball = false
 
 func _input(_event):
-	if is_dead == false:
+	if is_dead == false and get_parent().Shots > 0:
 		# Start aim
 		if Input.is_action_just_pressed("lmb"):
 			if mouse_on_ball and velocity == Vector2.ZERO:

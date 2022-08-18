@@ -8,7 +8,7 @@ atlas = ExtResource( 2 )
 region = Rect2( 132, 0, 24, 24 )
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 4.0
+radius = 2.0
 
 [node name="Goal" type="Node2D"]
 script = ExtResource( 1 )

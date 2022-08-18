@@ -1,6 +1,6 @@
 extends Node2D
 
-export(int) var Par
+export(int) var Shots
 export var CamPath : NodePath
 export var CamTargetPath : NodePath
 
@@ -24,6 +24,8 @@ onready var transition = $CanvasLayer/Transition
 func _ready():
 	transition.transition_in()
 	
+	$CanvasLayer/LevelName.text = "Level " + str(int(filename)) + ": " + LevelNames.dict[int(filename)]
+	
 	# Load next level
 	var file = File.new()
 	if file.file_exists("res://Data/Scenes/Levels/Level" + str(int(filename) + 1) + ".tscn"):
@@ -33,6 +35,8 @@ func _ready():
 	
 	_cam_lastpos = global_position
 	$CanvasLayer/MenuButton.visible = true
+	$CanvasLayer/LevelName.visible = true
+	$CanvasLayer/ShotsLeft.visible = true
 	
 	# Check for tilemap and calculate camera limits
 	var margin = 48
@@ -47,6 +51,7 @@ func _ready():
 
 func _process(_delta):
 	_camera()
+	$CanvasLayer/ShotsLeft/Value.text = str(Shots)
 
 func _input(event):
 	# Reset camera position
