@@ -10,13 +10,13 @@ func _ready():
 	Line.clear_points()
 
 func _physics_process(delta):
-	for i in 240:
+	for i in 120:
 		if has_node("/root/Level/Goal"):
 			if global_position.distance_to(get_node("/root/Level/Goal").global_position) > 3:
 				_motion(delta)
 		else:
 			_motion(delta)
-		if Line.get_point_count() < 180:
+		if Line.get_point_count() < 120:
 			Line.add_point(position)
 	
 
