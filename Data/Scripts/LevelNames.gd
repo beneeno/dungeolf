@@ -1,16 +1,18 @@
 extends Node
 
 var dict = {
-	1: "The Very First Level",
-	2: "And the One After That",
-	3: "A Little Less Power",
-	4: "Learn to Slow Down",
-	5: "Learn to Slow Down Even More",
-	6: "Mud, Friend or Foe?",
-	7: "Flopping in the Mud",
-	8: "Introducing....Danger!",
-	9: "Lined Up Perfectly",
-	10: "A Perilous Mudslide"
+	1: "Caves I",
+	2: "Caves II",
+	3: "Caves III",
+	4: "Entryway I",
+	5: "Entryway II",
+	6: "Entryway III",
+	7: "Dungeon I",
+	8: "Dungeon II",
+	9: "Dungeon III",
+	10: "Depths I",
+#	11: "Depths II",
+#	12: "Depths III"
 }
 
 func _ready():
