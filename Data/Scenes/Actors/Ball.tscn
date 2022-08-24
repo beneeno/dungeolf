@@ -64,5 +64,7 @@ texture = SubResource( 6 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="mouse_entered" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_entered"]
 [connection signal="mouse_exited" from="Launcher/ClickableZone" to="." method="_on_ClickableZone_mouse_exited"]

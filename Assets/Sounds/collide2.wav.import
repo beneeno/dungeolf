@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/collide2.wav-d09d00b8e3e7e84e2d5337aac4976da4.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/collide2.wav"
+dest_files=[ "res://.import/collide2.wav-d09d00b8e3e7e84e2d5337aac4976da4.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

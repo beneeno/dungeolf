@@ -11,10 +11,19 @@ var is_dead = false
 
 var _new_pos = Vector2()
 var _line_position = Vector2()
+var _can_sound_collide = true
+var _sound_collide_id = 1
 
 onready var Line = $Launcher/TrajectoryLine
 onready var Trail = $CPUParticles2D
 onready var Aim = $Launcher/Aim
+onready var Sound = $AudioStreamPlayer
+
+onready var snd_aim = preload("res://Assets/Sounds/aim.wav")
+onready var snd_shoot = preload("res://Assets/Sounds/shoot.wav")
+onready var snd_collide1 = preload("res://Assets/Sounds/collide1.wav")
+onready var snd_collide2 = preload("res://Assets/Sounds/collide2.wav")
+onready var snd_collide3 = preload("res://Assets/Sounds/collide3.wav")
 
 func _ready():
 	if get_parent().name == "Level":
@@ -72,6 +81,25 @@ func _motion(delta):
 		velocity.x += 5 * collision.normal.round().x
 	if velocity.y == 0:
 		position.y = round(position.y)
+	
+	# Sound
+	if collision:
+		if _can_sound_collide == true and (abs(velocity.y) > 60 or abs(velocity.x) > 60):
+			var collide_sound
+			match _sound_collide_id:
+				1:
+					collide_sound = snd_collide1
+				2:
+					collide_sound = snd_collide2
+				3:
+					collide_sound = snd_collide3
+			_play_sound(collide_sound)
+			_sound_collide_id += 1
+			if _sound_collide_id == 4:
+				_sound_collide_id = 1
+			_can_sound_collide = false
+	else:
+		_can_sound_collide = true
 
 func _shoot():
 	for i in 4:
@@ -82,6 +110,7 @@ func _shoot():
 	velocity = -aim_point * power
 	_line_position = Line.global_position
 	is_aiming = false
+	_play_sound(snd_shoot)
 
 
 ### INPUT FUNCTIONS
@@ -91,7 +120,7 @@ func _on_ClickableZone_mouse_entered():
 func _on_ClickableZone_mouse_exited():
 	mouse_on_ball = false
 
-func _input(_event):
+func _input(event):
 	if is_dead == false and get_parent().Shots > 0:
 		# Start aim
 		if Input.is_action_just_pressed("lmb"):
@@ -110,6 +139,10 @@ func _input(_event):
 		if Input.is_action_just_pressed("rmb"):
 			if is_aiming:
 				is_aiming = false
+		
+		if event is InputEventMouseMotion:
+			if is_aiming:
+				_play_sound(snd_aim)
 
 
 ### DRAWING FUNCTIONS
@@ -158,3 +191,16 @@ func _clear_trajectory():
 func die():
 	is_dead = true
 	velocity = Vector2.ZERO
+
+
+## AUDIO
+
+func _play_sound(wav):
+	if Sound.stream == wav:
+		if Sound.playing == false:
+			Sound.stream = wav
+			Sound.play()
+	else:
+		Sound.stream = wav
+		Sound.play()
+		
