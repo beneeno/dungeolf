@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/dungeolf_theme.ogg-d57b8b49b272643fe6cd6b2000c3647c.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/dungeolf_theme.ogg"
+dest_files=[ "res://.import/dungeolf_theme.ogg-d57b8b49b272643fe6cd6b2000c3647c.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

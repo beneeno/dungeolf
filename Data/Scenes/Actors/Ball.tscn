@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Data/Scripts/Ball.gd" type="Script" id=1]
-[ext_resource path="res://Assets/actors.png" type="Texture" id=2]
+[ext_resource path="res://Assets/tileset_main.png" type="Texture" id=2]
 [ext_resource path="res://Assets/trajectory.png" type="Texture" id=3]
 [ext_resource path="res://Data/Scenes/Actors/TrajectoryGhost.tscn" type="PackedScene" id=4]
 
@@ -16,7 +16,7 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="AtlasTexture" id=6]
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 10, 10 )
+region = Rect2( 146, 86, 8, 8 )
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.0
