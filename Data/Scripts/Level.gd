@@ -20,6 +20,9 @@ var _cam_down = int()
 
 onready var _vp = get_viewport_rect().size / 2
 onready var transition = $CanvasLayer/Transition
+onready var Sound = $AudioStreamPlayer
+
+onready var snd_retry = preload("res://Assets/Sounds/retry.wav")
 
 func _ready():
 	transition.transition_in()
@@ -205,3 +208,13 @@ func _on_MenuButton_pressed():
 
 func _on_RetryButton_pressed():
 	transition.transition_out()
+	_play_sound(snd_retry)
+
+func _play_sound(wav):
+	if Sound.stream == wav:
+		if Sound.playing == false:
+			Sound.stream = wav
+			Sound.play()
+	else:
+		Sound.stream = wav
+		Sound.play()

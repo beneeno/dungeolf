@@ -99,6 +99,8 @@ visible = false
 scale = Vector2( 0.1, 0.1 )
 texture = ExtResource( 2 )
 
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
 [connection signal="pressed" from="CanvasLayer/MenuButton" to="." method="_on_MenuButton_pressed"]
 [connection signal="pressed" from="CanvasLayer/RetryButton" to="." method="_on_RetryButton_pressed"]
 [connection signal="transition_out_done" from="CanvasLayer/Transition" to="." method="_on_Transition_transition_out_done"]

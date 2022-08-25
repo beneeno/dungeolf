@@ -24,6 +24,10 @@ onready var snd_shoot = preload("res://Assets/Sounds/shoot.wav")
 onready var snd_collide1 = preload("res://Assets/Sounds/collide1.wav")
 onready var snd_collide2 = preload("res://Assets/Sounds/collide2.wav")
 onready var snd_collide3 = preload("res://Assets/Sounds/collide3.wav")
+onready var snd_bounce1 = preload("res://Assets/Sounds/bounce1.wav")
+onready var snd_bounce2 = preload("res://Assets/Sounds/bounce2.wav")
+onready var snd_bounce3 = preload("res://Assets/Sounds/bounce3.wav")
+onready var snd_die = preload("res://Assets/Sounds/die.wav")
 
 func _ready():
 	if get_parent().name == "Level":
@@ -82,17 +86,26 @@ func _motion(delta):
 	if velocity.y == 0:
 		position.y = round(position.y)
 	
-	# Sound
+	# Bounce / Collide Sound
 	if collision:
 		if _can_sound_collide == true and (abs(velocity.y) > 60 or abs(velocity.x) > 60):
 			var collide_sound
-			match _sound_collide_id:
-				1:
-					collide_sound = snd_collide1
-				2:
-					collide_sound = snd_collide2
-				3:
-					collide_sound = snd_collide3
+			if collision.collider.bounciness == 0.8:
+				match _sound_collide_id:
+					1:
+						collide_sound = snd_bounce1
+					2:
+						collide_sound = snd_bounce2
+					3:
+						collide_sound = snd_bounce3
+			else:
+				match _sound_collide_id:
+					1:
+						collide_sound = snd_collide1
+					2:
+						collide_sound = snd_collide2
+					3:
+						collide_sound = snd_collide3
 			_play_sound(collide_sound)
 			_sound_collide_id += 1
 			if _sound_collide_id == 4:
@@ -191,6 +204,7 @@ func _clear_trajectory():
 func die():
 	is_dead = true
 	velocity = Vector2.ZERO
+	_play_sound(snd_die)
 
 
 ## AUDIO
