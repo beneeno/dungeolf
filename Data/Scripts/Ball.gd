@@ -124,6 +124,8 @@ func _shoot():
 	_line_position = Line.global_position
 	is_aiming = false
 	_play_sound(snd_shoot)
+	if get_parent().name == "Level":
+		get_parent().switch_camera(self)
 
 
 ### INPUT FUNCTIONS
